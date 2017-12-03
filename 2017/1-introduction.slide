@@ -1,0 +1,385 @@
+Introduction to Go
+18:30 30 Nov 2017
+Tags: go golang
+
+http://github.com/HowProgrammingWorks
+
+Vlad Dziuba
+dzyubavlad@gmail.com
+@chetkiy_poz
+
+Mykola Bilochub
+nbelochub@gmail.com
+@belochub
+
+* What is Go?
+
+.image 1-introduction/cs_go.jpg _ 350
+.image 1-introduction/go_game.jpg _ 350
+.image 1-introduction/go_lang.svg 200 _
+
+* Origin purposes
+
+First introduced in 2009 by Robert Griesemer, Rob Pike and Ken Thompson
+.image 1-introduction/google.png 100 _
+
+Language targets:
+
+- writing fast code
+- writing simple code
+- compiling fast
+
+* Family tree
+
+.image 1-introduction/family_tree.png 550 _
+
+* Language classification
+
+- static type checking
+- dynamic interface matching
+- imperative paradigm
+- first-class functions
+
+* Go main features
+
+- easy to learn
+- has standard tools for development (code formatter, linter, automatic imports etc)
+- has many well-designed standard libraries targeting web applications
+- concurrency implemented in a way it can be easily understood
+
+* Go survey 2016
+
+.link https://blog.golang.org/survey2016-results results
+
+Go area of usage:
+- 63% for web development
+- 30-40% for each: systems programming, DevOps, Network programming, databases
+- 11-15% for each: mobile, desktop/GUI, security, data science, finance, IoT
+
+People writing in Go has expertise in:
+- 12-16% Javascript, Python, Java and C
+- 5-8% Bash, C++, PHP, Ruby and C#
+- 1-4% Perl, Scala, Rust, Lua, Haskell, R, Clojure, Erlang, Julia and others
+
+What do you like most about Go?
+- simplicity
+- easy
+- concurrency
+- fast
+
+* Pros and cons
+
+.image 1-introduction/pros_and_cons.jpg
+
+* Static typing
+
+Pros (similar to C++, Java):
+
+- checking silly mistakes at compile time
+- types are comments in a way
+- better IDE support
+.image 1-introduction/gears.png 100 _
+
+Cons (as opposed to Python, JavaScript):
+
+- can't add new fields and methods to objects in runtime
+- you don't need to specify types all the time, thus less writing
+.image 1-introduction/cells.jpg 100 _
+
+* Garbage collector
+
+Pros (Java, Python, JavaScript):
+
+- you don't have to think about memory management in most of the cases
+
+.image 1-introduction/garbage_collector.jpg 200 _
+
+Cons (C, C++):
+
+- you don't have a direct control over memory (do you really need it?)
+- GC in Go used to be slow, with it's "stop the world" pauses...
+
+* But it is not slow anymore!
+
+.image 1-introduction/gc-improvements.png _ 500
+
+.link https://twitter.com/brianhatfield/status/804355831080751104 Thread in Twitter
+
+* Structure embedding comparing to class inheritance
+
+Pros:
+
+- host structure receives methods of embedded automatically
+- you can embed interfaces
+
+Cons (C++, Java, Python):
+
+- you can't choose base class object only constructor for creating it
+- multiple inheritance isn't possible or obvious sometimes
+- object composition (used as inheritance) requires a lot of straightforward code
+
+* Go duck typing
+
+Pros (Python, Javascript):
+
+- types can be used as interfaces without declaring relation between them
+- duck typing checks types at compilation time
+
+.image 1-introduction/duck_typing.jpg
+
+* Real world usages
+
+.html 1-introduction/real_world_examples.html
+
+* Best with working in parallel
+
+[[https://blog.golang.org/8years][Article to the 8 year anniversary of Go]]
+
+Companies having critical components of their cloud infrastructure implemented in Go:
+
+Google Cloud
+AWS
+Microsoft Azure
+Digital Ocean
+Heroku
+
+Go is a key part of cloud companies: 
+
+Alibaba
+Cloudflare
+Dropbox
+
+Go is a critical part of open infrastructure:
+Kubernetes, Cloud Foundry, Openshift, NATS, Docker, Istio, Etcd, Consul and Juju
+
+* How to learn Go
+
+- Online tour with Go playground: [[https://tour.golang.org/][A tour of Go]]
+- Source of examples: [[https://gobyexample.com/][Go by example]]
+- Books: [[https://www.amazon.com/Programming-Language-Addison-Wesley-Professional-Computing/dp/0134190440][The Go Programming Language]], [[https://github.com/dariubs/GoBooks][list of books]]
+.image 1-introduction/the_go_programming_language_book_cover.png 200 _
+- Place for practice: [[https://github.com/HowProgrammingWorks/][How Programming Works]] repo
+.image 1-introduction/how_programming_works_logo.png 100 _
+
+* Write in Go!
+
+.image 1-introduction/gopher_codes.gif 100 _
+.html 1-introduction/write_in_go_video.html
+
+* Program Structure in Go
+
+* Identifiers and keywords
+
+Identifiers:
+
+- is a sequence of one or more letters and digits
+- can only start with a letter (any Unicode letter and "_")
+
+25 keywords:
+
+  break        default      func         interface    select
+  case         defer        go           map          struct
+  chan         else         goto         package      switch
+  const        fallthrough  if           range        type
+  continue     for          import       return       var
+
+
+* There are also some predeclared identifiers
+
+  Types:
+    bool byte complex64 complex128 error float32 float64
+    int int8 int16 int32 int64 rune string
+    uint uint8 uint16 uint32 uint64 uintptr
+
+  Constants:
+    true false iota
+
+  Zero value:
+    nil
+
+  Functions:
+    append cap close complex copy delete imag len
+    make new panic print println real recover
+
+* Declarations
+
+- variable declarations
+- constant declarations
+- function declarations
+- type declarations
+
+* Variables (1/2)
+
+It looks like
+
+  var name type = expression
+
+For example
+
+  var s string = "Hello, world!"
+
+You can omit `type` or `expression`, but not both of them
+
+Just like that:
+
+  var s = "Hello, world!"
+
+or
+
+  var s string
+
+In the latter case variable has zero value
+
+* Variables (2/2)
+
+You can also declare multiple variables like that:
+
+  var a, b int
+
+And assign them values like this:
+
+  var a, b int = 1, 2
+
+You can even omit types here as well!
+
+  var a, s = 1, "Hello, world!"
+
+It is also possible to group variables:
+
+  var (
+  	a, b int = 1, 2
+  	s        = "Hello, world!"
+  )
+
+* The zero value
+
+Every time the variable is created,
+and no explicit initialization is provided, it is given a default value.
+
+- `false` for booleans
+- `0` for integers
+- `0.0` for floats
+- `""` for strings
+- `nil` for pointers, functions, interfaces, slices, channels, and maps
+
+* Short variable declarations
+
+  a := 1
+  b, s := 2, "Hello, world!"
+
+Which is short for
+
+  var a = 1
+  var b, s = 2, "Hello, world!"
+
+You may also redeclare variables provided they were originally declared
+earlier in the same block with the same type, and at least one
+of the non-blank variables is new.
+
+  a, b := 1, 2
+  c, b := 2, 3 // b == 3 now
+
+  a, a := 1, 2 // this is illegal
+
+
+* Pointers
+
+  x := 1
+  var a *int
+  a = &x
+
+Pointer holds the address of a variable in memory.
+
+You can use pointers to change variables passed into functions:
+
+  func inc(v *int) int {
+  	*v++
+  	return *v
+  }
+
+Important note: there is no pointer arithmetic in Go!
+
+You can also use function `new` to allocate storage for a variable of
+the type provided to it at run time. It returns value of type pointing
+to the provided one.
+
+  var a *int // new(int) returns *int
+  a = new(int) // *a == 0
+
+* Assignments
+
+  x = 1
+  *p = true
+  country.capital = "Kyiv"
+  c[x] = x
+
+You can also use some of these:
+
+  +=    %=    <<=
+  -=    &=    >>=
+  *=    |=    &^=
+  /=    ^=
+
+It works similar to every other language:
+
+  a += 10
+  // same as
+  a = a + 10
+
+* Type declarations
+
+  type typename basetype
+
+Used to declare new types which can afterwards have methods declared on them.
+
+Examples:
+
+  type Kilometer float64
+
+  type Mile float64
+
+* Type aliases (starting with Go 1.9)
+
+  type typealias = basetype
+
+Used to denote alias of the type.
+
+Example:
+
+  type Phone = string
+
+* Packages and Files
+
+Go programs are constructed by linking together packages.
+
+  package io
+
+A package in turn is constructed from one or more source files that together
+declare constants, types, variables and functions belonging to the package
+and which are accessible in all files of the same package.
+
+Those elements may be exported and used in another package.
+
+Package named `main` is a special case (used when creating an executable).
+
+* Package import
+
+To import a package you can use `import` keyword:
+
+  import "io"
+  import "golang.org/x/tools/godoc"
+
+You can also batch imports:
+
+  import (
+  	"fmt"
+  	"os"
+  )
+
+* We are on Go meetups
+
+.image 1-introduction/kolya.png 600 _
+
+* We are on Go meetups
+
+.image 1-introduction/vlad.png 600 _
