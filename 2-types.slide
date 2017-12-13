@@ -1,0 +1,351 @@
+Basic and composite data types in Go
+18:30 7 Dec 2017
+Tags: go golang
+
+http://github.com/HowProgrammingWorks
+
+Vlad Dziuba
+dzyubavlad@gmail.com
+@chetkiy_poz
+
+Mykola Bilochub
+nbelochub@gmail.com
+@belochub
+
+* Basic data types
+
+* Integers (1/3)
+
+Signed:
+
+- `int8`
+- `int16`
+- `int32`
+- `int64`
+
+Unsigned:
+
+- `uint8`
+- `uint16`
+- `uint32`
+- `uint64`
+
+* Integers (2/3)
+
+Implementation specific:
+
+- `int`
+- `uint`
+- `uintptr`
+
+`int32`/`int64` is not the same type as `int`!
+
+Default aliases:
+
+- `byte` is an alias for `uint8`
+- `rune` is an alias for `int32`
+
+* Integers (3/3)
+
+Examples of integer literals:
+
+  d := 10   // decimal literal
+
+  o := 010  // octal literal
+
+  x := 0x10 // hexadecimal literal
+
+* Floating-point numbers
+
+IEEE-754 compliant.
+Two types:
+
+- `float32`
+- `float64`
+
+* Complex numbers
+
+.image 2-types/wow.gif 270 _
+
+- `complex64`
+- `complex128`
+
+Examples of complex values:
+
+  comp := 10 + 3i
+  comp = complex(10, 3) // the same as previous line
+  rcomp := real(comp)   // returns value of real part (10)
+  icomp := imag(comp)   // returns value of imaginary part (3)
+
+* Booleans
+
+Type is called `bool`.
+Possible values are `true` and `false`.
+
+.image 2-types/obvi.gif 300 _
+
+* Strings
+
+Type is called `string`.
+
+A string value is an immutable, possibly empty, sequence of bytes.
+
+You can use built-in `len` function to get the length (size in bytes) of a string.
+
+To access a particular byte of a string you can use indices `0` to `len(s)-1`:
+
+  b := s[i]   // type of b is byte
+
+  e := &s[i]  // this is illegal
+  s[i] = 42   // can't do, it's immutable!
+
+You can concat strings using `+` operator.
+
+* Let's check your attention
+
+What will be printed on the screen?
+
+.play 2-types/len.go /START/,/END/
+
+* Constants (1/4)
+
+- boolean
+- rune
+- integer
+- floating-point
+- complex
+- string
+
+Constant value is represented by a literal, identifier denoting a constant,
+a constant expression, a conversion with a result that is a constant,
+or the result value of some built-in functions, e.g. `len`, `real`, `imag`.
+
+* Constants (2/4)
+
+Examples of possible values:
+
+  const pi float32 = 3.14159
+  const piConst = pi
+  const pi2 float64 = 2 * 3.14159
+  const strLen int = len("string")
+  const uLen uint = uint(strLen)
+
+You can also combine `const` declarations:
+
+  const (
+  	pi float64 = 3.14159
+  	d  int     = -1
+  )
+  const a, b, c int = 3, 4, 5
+
+If the value is omitted, it is assigned to previous provided value:
+
+  const (
+  	pi float64 = 3.14159
+  	pi1         // pi1 equals pi
+  )
+
+* Constants (3/4)
+
+You can use `iota` to generate constant values in compile time:
+
+  const (
+  	Monday = iota
+  	Tuesday
+  	Wednesday
+  	Thursday
+  	Friday
+  	Saturday
+  	Sunday
+  )
+
+It is also useful for flags:
+
+  const (
+  	flag1 = 1 << iota
+  	flag2
+  	flag3
+  )
+
+* Constants (4/4)
+
+Constants can be untyped:
+
+  const a = 10
+  const b, c = 12, "some string"
+
+Literal constants such as `true`, `false`, `iota` are untyped.
+
+They can be assigned to types which can hold them:
+
+  const (
+  	a        = 3.0
+  	over9000 = 9001.0
+  	f        = 3.01
+  	i        = 100
+  )
+
+  var b byte
+  b = a        // okay
+  b = f        // not okay
+  b = over9000 // not okay
+
+  var c float64
+  c = i        // okay
+
+* That was quite easy
+
+.image 2-types/bored.gif 300 _
+
+* Composite types
+
+* Arrays
+
+Array is a numbered sequence of elements of a single type.
+The number of elements is called length and it is never negative.
+
+Length is a part of the array's type.
+Arrays are always one-dimensional but can be composed to form multi-dimensional types.
+
+  var buf [32]byte
+  var p [2][2][2]float64 // same as [2]([2]([2]float64))
+
+  buf := [32]byte{}      // array literals
+  t := [2]int{10, 20}
+
+* Slices
+
+Slice is a segment of an underlying array.
+
+You can get slice's capacity by using `cap` function.
+
+  var buf []byte // buf == nil
+
+  buf = make([]byte, 10, 200) // len is 10, cap is 200, cap is optional
+
+* Built-in slice functions
+
+- `append`
+- `copy`
+
+  slice = append(slice, elem1, elem2)
+  slice = append(slice, anotherSlice...)
+
+  copy(dst, src)
+
+`dst` and `src` may overlap. `copy` returns the number of elements copied.
+
+* Maps
+
+Map is an unordered group of elements of one type, indexed by a set of unique keys.
+
+Key type must be comparable, thus it can't be a function, map or slice.
+
+  var m map[string]int // m == nil
+
+  m = make(map[string]int, 10) // cap is 10, it is optional
+
+  m["some string"] = 420   // add or change a value
+  delete(m, "some string")
+
+  value, ok := m["some string"] // get a value, ok is optional, true if key is present
+
+  t := &m["some string"] // this is illegal
+
+* Structs
+
+Struct is a sequence of fields, each of which has a name and a type.
+
+  type Person struct {
+  	Name   string
+  	Age    int
+  	Gopher bool
+  }
+
+
+  mykola := Person{"Mykola", 20, true}
+
+  vlad := Person{
+  	Age:    20,
+  	Gopher: true,
+  	Name:   "Vlad",
+  }
+
+  dmytro := Person{"Dmytro", 21, false}
+
+  name := dmytro.Name  // get the value of a field
+
+  dmytro.Gopher = true // assign a new value
+
+* Operations on types (1/6)
+
+Arithmetic operators
+
+  +    sum                    integers, floats, complex values, strings
+  -    difference             integers, floats, complex values
+  *    product                integers, floats, complex values
+  /    quotient               integers, floats, complex values
+  %    remainder              integers
+
+  &    bitwise AND            integers
+  |    bitwise OR             integers
+  ^    bitwise XOR            integers
+  &^   bit clear (AND NOT)    integers
+
+  <<   left shift             integer << unsigned integer
+  >>   right shift            integer >> unsigned integer
+
+* Operations on types (2/6)
+
+Comparison operators
+
+  ==    equal
+  !=    not equal
+  <     less
+  <=    less or equal
+  >     greater
+  >=    greater or equal
+
+`==` and `!=` apply to operands which are comparable.
+`<`, `<=`, `>` and `>=` apply to operands which are ordered.
+
+* Operations on types (3/6)
+
+Comparable values:
+
+- boolean
+- integer
+- floating-point
+- complex
+- strings
+- pointers
+- structs (if all of the fields are comparable)
+- arrays (if values are of comparable type)
+
+* Operations on types (4/6)
+
+Ordered values:
+
+- integer
+- floating-point
+- strings
+
+* Operations on types (5/6)
+
+Logical operators:
+
+  &&    conditional AND    p && q  is  "if p then q else false"
+  ||    conditional OR     p || q  is  "if p then true else q"
+  !     NOT                !p      is  "not p"
+
+Apply only to boolean values.
+
+* Operations on types (6/6)
+
+Type conversion:
+
+`type(expression)`
+
+  int(3.0)            // 3
+  string('x')         // "x"
+  string([]byte{'a'}) // "a"
