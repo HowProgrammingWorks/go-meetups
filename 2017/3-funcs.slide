@@ -1,0 +1,86 @@
+Functions, methods and interfaces in Go
+18:30 14 Dec 2017
+Tags: go golang
+
+http://github.com/HowProgrammingWorks
+
+Vlad Dziuba
+dzyubavlad@gmail.com
+@chetkiy_poz
+
+Mykola Bilochub
+nbelochub@gmail.com
+@belochub
+
+* Function declaration
+.code 3-funcs/declaration.go
+
+* Pass arguments by value and by reference
+.code 3-funcs/pass_arguments.go
+.image 3-funcs/array_and_slices.png
+.image 3-funcs/go_lang.svg 150 _
+
+* Multiple values return
+.play 3-funcs/multiple_return.go
+.image 3-funcs/real_gopher.png 170 _
+
+* Gophers
+.image 3-funcs/gopher_toys.jpg 550 _
+
+* Capturing gopher
+.html 3-funcs/capturing_gopher.html
+
+* Error handling strategies
+.code 3-funcs/errors.go
+
+* Anonymous functions
+.code 3-funcs/server.go
+
+* Capturing loop variables in closure
+.image 3-funcs/interview_question.png 600 _
+
+* Capturing loop variable in go
+.play 3-funcs/capturing.go
+
+* Capturing with local variable
+.play 3-funcs/capturing_with_var.go
+
+* Capturing loop variable in go
+.play 3-funcs/capturing_with_goroutine.go
+
+* Method declarations
+.code 3-funcs/methods_declaration.go
+
+* In The Army Now
+.link https://www.youtube.com/watch?v=ObntvRcKMrE
+
+* Using methods as functions
+.code 3-funcs/method_values.go
+
+* Struct embedding (1/4)
+.code 3-funcs/applepen.go
+
+* Struct embedding (2/4)
+.code 3-funcs/applepen-2.go
+
+* Struct embedding (3/4)
+.code 3-funcs/applepen-3.go
+
+* Struct embedding (4/4)
+.code 3-funcs/applepen-4.go
+
+* Interfaces
+.code 3-funcs/stringer.go
+.code 3-funcs/io_interfaces.go
+.html 3-funcs/io_interfaces.html
+
+* Interface implementation (1/2)
+
+.code 3-funcs/discarder.go
+
+* Interface implementation (2/2)
+
+.play 3-funcs/zeroreader.go /START/,/END/
+
+* Interface embedding
+.code 3-funcs/complex_interfaces.go
