@@ -1,0 +1,74 @@
+Go programming language practice
+18:30 21 Dec 2017
+Tags: go golang
+
+http://github.com/HowProgrammingWorks
+
+Vlad Dziuba
+dzyubavlad@gmail.com
+@chetkiy_poz
+
+Mykola Bilochub
+nbelochub@gmail.com
+@belochub
+
+* Installing Go
+
+General instructions:
+.link https://goo.gl/Lv2tbm
+
+Arch:
+
+  pacman -S go
+
+Fedora/CentOS:
+.link https://go-repo.io/
+
+macOS:
+
+  brew install go
+
+* Docs
+
+The standard library documentation is available at
+.link https://golang.org/pkg/
+
+* Let's start with something VERY simple
+
+- Output any non-empty string to stdout, then to stderr.
+- Print numbers from 1 to 100 in any order, using the loop.
+- Create a function that calculates the sum of two numbers and use it.
+
+* Now make it a little bit more difficult
+
+- Append any non-empty string to file, creating the file if it doesn't exist.
+- Print numbers from 1 to 100 in completely random order.
+- Create a function that calculates the sum of any number of numbers passed to it and use it.
+
+* Live table aka Google Spreadsheet
+
+Write backend on go for multi-user table using existing frontend in Javascript
+
+.link https://github.com/HowProgrammingWorks/LiveTable Implementation on Nodejs
+
+.link https://godoc.org/github.com/gorilla/websocket API reference for go websocket
+
+.link http://localhost:1418
+
+.image 4-practice/live_table.png
+
+* Wanna be rich?
+
+.image 4-practice/rich.png
+
+* Create a simple version of blockchain
+
+- Create Transaction struct with id int, hash string and data interface{} fields
+- Create function that calculcated hash of the current transaction
+- Create function that adds new transaction to the slice of the transactions calculating its hash
+- Create server with method receiving transaction data and storing it to slice
+- Create method in the server listing all transactions
+
+Hash = hash_func(string(previous transaction with hash) + string(current transaction without hash))
+string - is transaction serialized into json
+hash_func can be function from Golang sha512 package
